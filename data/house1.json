@@ -1,0 +1,27 @@
+[
+    {"number":1,
+     "url":"./assets/woodlands/WoodlandsRd_1.png",
+     "location":[
+        {"left":"62%","top":"74%","rotation":340,"type":"360","url":"./assets/woodlands/hall.jpg"},
+        {"left":"47%","top":"35%","rotation":340,"type":"360","url":"./assets/woodlands/kitchen1.jpg"},
+        {"left":"47%","top":"72%","rotation":340,"type":"360","url":"./assets/woodlands/conservatory.jpg"},
+        {"left":"18%","top":"18%","rotation":340,"type":"360","url":"./assets/woodlands/study.jpg"},
+        {"left":"78%","top":"59%","rotation":340,"type":"360","url":"./assets/woodlands/sittingroom.jpg"},
+        {"left":"39%","top":"57%","rotation":20,"type":"camera","url":"./assets/woodlands/kitchen_still1.jpg"},
+        {"left":"86%","top":"39%","rotation":200,"type":"camera","url":"./assets/woodlands/sittingroom_still1.jpg"},
+        {"left":"63%","top":"47%","rotation":0,"type":"camera","url":"./assets/woodlands/toilet_still.jpg"}
+
+      ]
+    },
+    {"number":2,
+     "url":"./assets/48CanterburyRd_2.jpg",
+     "location":[
+        {"left":"44%","top":"32%","rotation":310,"type":"camera","url":"./assets/48CanterburyRd_Bathroom.jpg"},
+        {"left":"45%","top":"25%","rotation":35,"type":"camera","url":"./assets/48CanterburyRd_Bedroom1.jpg"},
+        {"left":"64%","top":"25%","rotation":320,"type":"camera","url":"./assets/48CanterburyRd_Bedroom1_1.jpg"},
+        {"left":"49%","top":"53%","rotation":130,"type":"camera","url":"./assets/48CanterburyRd_Bedroom2.jpg"},
+        {"left":"43%","top":"53%","rotation":200,"type":"camera","url":"./assets/48CanterburyRd_Bedroom3.jpg"},
+        {"left":"43%","top":"13%","rotation":320,"type":"camera","url":"./assets/48CanterburyRd_Ensuite.jpg"}
+      ]
+    }
+  ]
