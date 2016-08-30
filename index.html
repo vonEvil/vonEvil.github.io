@@ -1,348 +1,41 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="nofollow" />
     <title>A simple example</title>
-    <link rel="stylesheet" href="./css/animate.css"/>
-    <link rel="stylesheet" href="./css/pannellum.css"/>
+    <script src="./js/less.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./css/animate.css" />
+    <link rel="stylesheet" href="./css/pannellum.css" />
     <link rel="stylesheet" href="./css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/materialize.min.css">
+    <link rel="stylesheet" href="./css/virtualFloorPlans.css" />
 
- <!-- Compiled and minified JavaScript -->
-    <style>
-
-    #container{
-      position:absolute;
-      top: 20px;
-      left: 20px;
-    }
-
-    #pictureContainer {
-        width: 800px;
-        height: 600px;
-        display: none;
-    }
-
-    #panorama {
-        width: 100%;
-        height: 100%;
-
-    }
-
-    #pictureViewer {
-        width: 100%;
-        height: 100%;
-
-    }
-
-    #floorPlan {
-        width: 800px;
-        height: 600px;
-        background-color: red;
-        background: url("./assets/48CanterburyRd_1.jpg") no-repeat center center;
-        -webkit-background-size: contain;
-        -moz-background-size: contain;
-        -o-background-size: contain;
-        background-size: contain;
-        position: absolute;
-    }
-
-    .cone {
-        position: absolute;
-        background: url("./assets/cone.png");
-        background-size:  100% 100%;
-        opacity:0.5;
-        width: 40px;
-        height: 40px;
-
-    }
-
-    .mapMarker>i{
-      position: absolute;
-      top: 64%;
-      left: 20.6%;
-
-    }
-
-    .floor2{
-      display:none;
-    }
-
-    .mapMarker{
-      position: absolute;
-      color: red;
-      width: 40px;
-      height: 40px;
-      transform-origin: 50% 100%;
-
-    }
-
-    i.z-depth-1:hover{
-        //box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
-        top: 29.5% !important;
-    }
-
-    i{
-      font-size: 20px !important;
-      text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
-    }
-
-    #homeButton{
-      float:right;
-      position:absolute;
-      right: 10px;
-      top: 10px;
-
-    }
-
-    #leftButton{
-      float:left;
-      position:absolute;
-      left: 5px;
-      top: 235px;
-
-    }
-
-    #rightButton{
-      float:right;
-      position:absolute;
-      right: 5px;
-      top: 235px;
-
-    }
-
-
-    .floorButton{
-      float:right;
-      right: 19px;
-      position: absolute;
-    }
-
-
-    #visibleButton{
-      float:right;
-      right: 10px;
-      top: 10px;
-      position: absolute;
-    }
-
-    </style>
 </head>
+
 <body>
 
-<div id="container">
-  <div id="floorPlan" class="z-depth-1">
+    <div id="container">
+        <div id="floorPlan" class="z-depth-1">
+            <i id="visibleButton" class="btn-floating btn-large waves-effect waves-light red fa fa-eye" aria-hidden="true"></i>
+        </div>
 
-    <i id="visibleButton" class="btn-floating btn-large waves-effect waves-light red fa fa-eye" aria-hidden="true"></i>
-<!--    <div id="floor1" class="btn-floating btn red accent-1">1</div>
-    <div id="floor2" class="btn-floating btn waves-effect waves-light red">2</div>-->
+        <div id="pictureContainer">
+            <div id="panorama"></div>
+            <div id="pictureViewer"></div>
+            <i id="homeButton" class="btn-floating btn-large waves-effect waves-light red fa fa-home" aria-hidden="true"></i>
+            <i id="leftButton" class="btn-floating btn-large waves-effect waves-light red fa fa-arrow-left" aria-hidden="true"></i>
+            <i id="rightButton" class="btn-floating btn-large waves-effect waves-light red fa fa-arrow-right" aria-hidden="true"></i>
+        </div>
+    </div>
 
-  </div>
-
-
-  <div id="pictureContainer">
-    <div id="panorama"></div>
-    <div id="pictureViewer"></div>
-    <i id="homeButton" class="btn-floating btn-large waves-effect waves-light red fa fa-home" aria-hidden="true"></i>
-    <i id="leftButton" class="btn-floating btn-large waves-effect waves-light red fa fa-arrow-left" aria-hidden="true"></i>
-    <i id="rightButton" class="btn-floating btn-large waves-effect waves-light red fa fa-arrow-right" aria-hidden="true"></i>
-  </div>
-</div>
-
-<script type="text/javascript" src="./js/jquery.js"></script>
-<script src="./js/materialize.js"></script>
-<script type="text/javascript" src="./js/libpannellum.js"></script>
-<script type="text/javascript" src="./js/pannellum.js"></script>
-<script>
-
-  var _pictureIndex =0;
-  var cameraPoints = [];
-  var data = [
-      {"number":1,
-       "url":"./assets/woodlands/WoodlandsRd_1.png",
-       "location":[
-          {"left":"62%","top":"74%","rotation":340,"type":"360","url":"./assets/woodlands/hall.jpg"},
-          {"left":"47%","top":"35%","rotation":340,"type":"360","url":"./assets/woodlands/kitchen1.jpg"},
-          {"left":"47%","top":"72%","rotation":340,"type":"360","url":"./assets/woodlands/conservatory.jpg"},
-          {"left":"18%","top":"18%","rotation":340,"type":"360","url":"./assets/woodlands/study.jpg"},
-          {"left":"78%","top":"59%","rotation":340,"type":"360","url":"./assets/woodlands/sittingroom.jpg"},
-          {"left":"39%","top":"57%","rotation":20,"type":"camera","url":"./assets/woodlands/kitchen_still1.jpg"},
-          {"left":"86%","top":"39%","rotation":200,"type":"camera","url":"./assets/woodlands/sittingroom_still1.jpg"},
-          {"left":"63%","top":"47%","rotation":0,"type":"camera","url":"./assets/woodlands/toilet_still.jpg"}
-
-        ]
-      },
-      {"number":2,
-       "url":"./assets/48CanterburyRd_2.jpg",
-       "location":[
-          {"left":"44%","top":"32%","rotation":310,"type":"camera","url":"./assets/48CanterburyRd_Bathroom.jpg"},
-          {"left":"45%","top":"25%","rotation":35,"type":"camera","url":"./assets/48CanterburyRd_Bedroom1.jpg"},
-          {"left":"64%","top":"25%","rotation":320,"type":"camera","url":"./assets/48CanterburyRd_Bedroom1_1.jpg"},
-          {"left":"49%","top":"53%","rotation":130,"type":"camera","url":"./assets/48CanterburyRd_Bedroom2.jpg"},
-          {"left":"43%","top":"53%","rotation":200,"type":"camera","url":"./assets/48CanterburyRd_Bedroom3.jpg"},
-          {"left":"43%","top":"13%","rotation":320,"type":"camera","url":"./assets/48CanterburyRd_Ensuite.jpg"}
-        ]
-      }
-    ];
-
-
-  var data2 = [
-      {"number":1,
-       "url":"./assets/48CanterburyRd_1.jpg",
-       "location":[
-          {"left":"34%","top":"35%","rotation":210,"type":"camera","url":"./assets/48CanterburyRd_Diner.jpg"},
-          {"left":"25.5%","top":"50%","rotation":20,"type":"camera","url":"./assets/48CanterburyRd_Conservatory.jpg"},
-          {"left":"28.5%","top":"15%","rotation":160,"type":"camera","url":"./assets/48CanterburyRd_Conservatory2.jpg"},
-          {"left":"38%","top":"59%","rotation":30,"type":"camera","url":"./assets/48CanterburyRd_Study.jpg"},
-          {"left":"34%","top":"41%","rotation":90,"type":"camera","url":"./assets/48CanterburyRd_Kitchen.jpg"},
-          {"left":"25%","top":"69%","rotation":110,"type":"camera","url":"./assets/48CanterburyRd_SittingRoom1.jpg"},
-          {"left":"38%","top":"69%","rotation":210,"type":"camera","url":"./assets/48CanterburyRd_SittingRoom2.jpg"},
-          {"left":"64%","top":"93%","rotation":340,"type":"camera","url":"./assets/48CanterburyRd_Drive.jpg"},
-          {"left":"49%","top":"34%","rotation":340,"type":"camera","url":"./assets/48CanterburyRd_Garden2.jpg"},
-          {"left":"27%","top":"74%","rotation":340,"type":"360","url":"./assets/picture4.jpg"},
-        ]
-      },
-      {"number":2,
-       "url":"./assets/48CanterburyRd_2.jpg",
-       "location":[
-          {"left":"44%","top":"32%","rotation":310,"type":"camera","url":"./assets/48CanterburyRd_Bathroom.jpg"},
-          {"left":"45%","top":"25%","rotation":35,"type":"camera","url":"./assets/48CanterburyRd_Bedroom1.jpg"},
-          {"left":"64%","top":"25%","rotation":320,"type":"camera","url":"./assets/48CanterburyRd_Bedroom1_1.jpg"},
-          {"left":"49%","top":"53%","rotation":130,"type":"camera","url":"./assets/48CanterburyRd_Bedroom2.jpg"},
-          {"left":"43%","top":"53%","rotation":200,"type":"camera","url":"./assets/48CanterburyRd_Bedroom3.jpg"},
-          {"left":"43%","top":"13%","rotation":320,"type":"camera","url":"./assets/48CanterburyRd_Ensuite.jpg"}
-        ]
-      }
-    ];
-
-
-  $( document ).ready(function() {
-
-    function clickCamera(element){
-      $('#pictureContainer').show();
-      $('#floorPlan').hide();
-      if ($(element).hasClass("fa-camera")){
-        _pictureIndex = parseInt($(element).attr('pictureIndex'));
-
-        $("#pictureViewer").css({"background":"url('"+$(element).attr('ref')+"')","background-size":"100% 100%"});
-        $("#panorama").hide();
-        $("#pictureViewer").show();
-      }else if ($(element).hasClass("fa-dot-circle-o")){
-        $("#panorama").show();
-        $("#pictureViewer").hide();
-        pannellum.viewer('panorama', {
-            "type": "equirectangular",
-            "panorama": $(element).attr('ref'),
-            "autoLoad": true
-        });
-      }
-    }
-    var pictureIndex =0;
-
-    for (var i=0;i< data.length;i++){
-        var floor = data[i];
-        var floorButton = $('<div id="floor'+floor.number+'" class="floorButton btn-floating btn red">'+floor.number+'</div>');
-        floorButton.attr("ref",floor.url);
-        floorButton.attr("floor",floor.number);
-        $('#floorPlan').append(floorButton);
-
-        if (i>0){
-          floorButton.addClass(" accent-1");
-        }
-        floorButton.css('top',(80+50*i)+"px");
-        $(floorButton).on('click',function(){
-            $('#floorPlan').css({"background":"url('"+$(this).attr("ref")+"') no-repeat center center","background-size":"contain"});
-            $('#floorPlan').css('background-size','contain');
-            $('.mapMarker').hide();
-            $('.floor'+$(this).attr("floor")).show();
-            $('.floorButton').addClass('waves-effect waves-light');
-            $('.floorButton').removeClass('accent-1');
-            $(this).removeClass('waves-effect waves-light');
-            $(this).addClass('accent-1');
-        });
-
-        for (var j=0;j< floor.location.length;j++){
-          var location = floor.location[j];
-
-          var template = $('<div class="animated mapMarker"><div class="cone"></div><i  class="clickCamera animated fa" ref="./assets/48CanterburyRd_SittingRoom1.jpg" aria-hidden="true"></i></div></div>');
-          template.css({"left":location.left,"top":location.top,"transform": "rotate("+location.rotation+"deg)"})
-          template.addClass("floor"+(i+1));
-          template.find('.fa').attr('pictureindex',pictureIndex++);
-          if (location.type=="camera"){
-            template.find('.fa').addClass("fa-camera");
-          }else{
-            template.find('.fa').addClass("fa-dot-circle-o");
-            template.find('.cone').remove();
-          }
-          template.find('.fa').attr('ref',location.url);
-          $('#floorPlan').append(template);
-          cameraPoints.push(location);
-        }
-    }
-
-    $('#floor1').click();
-
-
-    $('#visibleButton').on('click',function(){
-      if ($(this).hasClass("accent-1")){
-        // Set to hide icons
-        console.log("Visible")
-        setTimeout(function(){
-          console.log("Hide")
-          $('#visibleButton').removeClass("waves-red");
-          $('#visibleButton').addClass("waves-light");
-        },500)
-          $(this).removeClass("accent-1");
-          $('.mapMarker').removeClass("fadeOut");
-          $('.mapMarker').addClass("fadeIn");
-          //$('.mapMarker').show();
-          //Materialize.fadeInImage('.mapMarker')
-      }else{
-        setTimeout(function(){
-          console.log("Hide")
-          $('#visibleButton').addClass("waves-red");
-          $('#visibleButton').removeClass("waves-light");
-        },500)
-        $('#visibleButton').addClass("accent-1");
-        $('.mapMarker').addClass("fadeOut");
-        $('.mapMarker').removeClass("fadeIn");
-      }
-
-
-
-
-    })
-
-
-    $('.clickCamera').on('click',function(){return clickCamera(this)});
-    $('#homeButton').on('click',function(){
-      $('#pictureContainer').hide();
-      $('#floorPlan').show();
-    });
-
-    $('#leftButton').on('click',function(){
-      console.log("clicked left");
-      _pictureIndex--;
-      _pictureIndex= (cameraPoints.length+_pictureIndex)%cameraPoints.length;
-      var previousCamera = $('#floorPlan').find("[pictureindex='"+  _pictureIndex+"']");
-      clickCamera(previousCamera[0]);
-    });
-
-    $('#rightButton').on('click',function(){
-      console.log("clicked right");
-      _pictureIndex++;
-      _pictureIndex= (cameraPoints.length+_pictureIndex)%cameraPoints.length;
-      var previousCamera = $('#floorPlan').find("[pictureindex='"+  _pictureIndex+"']");
-      clickCamera(previousCamera[0]);
-    });
-
-  });
-
-
-</script>
-<!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="./js/jquery.js"></script>
+    <script src="./js/materialize.js"></script>
+    <script type="text/javascript" src="./js/libpannellum.js"></script>
+    <script type="text/javascript" src="./js/pannellum.js"></script>
 
 </body>
+
 </html>
