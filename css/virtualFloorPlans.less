@@ -1,4 +1,6 @@
 
+@baseColor : #ef9a9a;
+
     #container{
       position:absolute;
       top: 20px;
@@ -34,16 +36,6 @@
         position: absolute;
     }
 
-    .cone {
-        position: absolute;
-        background: url("./../assets/cone.png");
-        background-size:  100% 100%;
-        opacity:0.5;
-        width: 40px;
-        height: 40px;
-
-    }
-
     .mapMarker>i{
       position: absolute;
       top: 64%;
@@ -57,7 +49,7 @@
 
     .mapMarker{
       position: absolute;
-      color: red;
+      color: @baseColor;
       width: 40px;
       height: 40px;
       transform-origin: 50% 100%;

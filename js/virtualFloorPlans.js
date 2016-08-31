@@ -58,7 +58,7 @@ function loadFloorPlan(data) {
         for (var j = 0; j < floor.location.length; j++) {
             var location = floor.location[j];
 
-            var template = $('<div class="animated mapMarker"><div class="cone"></div><i  class="clickCamera animated fa" ref="./assets/48CanterburyRd_SittingRoom1.jpg" aria-hidden="true"></i></div></div>');
+            var template = $('<div class="animated mapMarker"><i  class="clickCamera animated fa" aria-hidden="true"></i></div></div>');
             template.css({
                 "left": location.left,
                 "top": location.top,
