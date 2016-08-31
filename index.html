@@ -5,13 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="nofollow" />
-    <title>A simple example</title>
-    <script src="./js/less.min.js" type="text/javascript"></script>
+    <title>Virtual Floor Plans</title>
+
     <link rel="stylesheet" href="./css/animate.css" />
     <link rel="stylesheet" href="./css/pannellum.css" />
     <link rel="stylesheet" href="./css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/materialize.min.css">
-    <link rel="stylesheet" href="./css/virtualFloorPlans.less" />
+    <!--<link rel="stylesheet" href="./css/virtualFloorPlans.css">-->
+    <link rel="stylesheet/less" type="text/css" href="./css/virtualFloorPlans.less" />
+    <script src="./js/less.min.js" type="text/javascript"></script>
 
 </head>
 
@@ -36,6 +38,17 @@
     <script type="text/javascript" src="./js/libpannellum.js"></script>
     <script type="text/javascript" src="./js/pannellum.js"></script>
     <script type="text/javascript" src="./js/virtualFloorPlans.js"></script>
+
+    <script>
+    $(document).ready(function() {
+      console.log("Loading Json")
+        $.getJSON("./data/house2.json", function(json) {
+          console.log("Loaded Json")
+            loadFloorPlan(json.data);
+        });
+
+    });
+    </script>
 
 </body>
 

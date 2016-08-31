@@ -26,26 +26,7 @@ function clickCamera(element) {
 }
 
 function loadFloorPlan(data) {
-    $('#pictureContainer').show();
-    $('#floorPlan').hide();
-    if ($(element).hasClass("fa-camera")) {
-        _pictureIndex = parseInt($(element).attr('pictureIndex'));
-
-        $("#pictureViewer").css({
-            "background": "url('" + $(element).attr('ref') + "')",
-            "background-size": "100% 100%"
-        });
-        $("#panorama").hide();
-        $("#pictureViewer").show();
-    } else if ($(element).hasClass("fa-dot-circle-o")) {
-        $("#panorama").show();
-        $("#pictureViewer").hide();
-        pannellum.viewer('panorama', {
-            "type": "equirectangular",
-            "panorama": $(element).attr('ref'),
-            "autoLoad": true
-        });
-    }
+    data = data;
 
     var pictureIndex = 0;
 
@@ -155,12 +136,3 @@ function loadFloorPlan(data) {
         clickCamera(previousCamera[0]);
     });
 }
-
-$(document).ready(function() {
-
-    $.getJSON("./data/house2.json", function(data) {
-        data = data;
-        loadFloorPlan(data);
-    });
-
-});
