@@ -2,39 +2,82 @@
     position: absolute;
     top: 20px;
     left: 20px;
+    width:800px;
+    height:600px;
+
+
 }
 #vContainer {
     position: relative;
 
+    i.fa {
+        font-size: 20px;
+        text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+    }
+
     #imageArea{
+      position:relative;
       width:800px;
       height:600px;
 
-      #pictureContainer {
-          display: none;
-          width: 100%;
-          height: 100%;
-      }
 
     }
 
+    #pictureContainer{
+      position:absolute;
+      width:800px;
+      height:600px;
 
+
+    }
+
+    #navArea{
+      #floorPlanLocation{
+         padding:10px;
+         width:150px;
+         height:120px;
+         float:left;
+      }
+
+      #carouselLocation{
+        display: inline-block;
+      }
+
+
+    }
+
+    #pictureContainer {
+        display: none;
+        z-index:100;
+    }
+
+    #floorPlan{
+      z-index:100;
+
+    }
 
 }
 
 .elastislide-wrapper{
+
+  .elastislide-carousel{
+    padding-bottom: 5px;
+  }
+
   nav{
     height: 0px;
     line-height: 0px;
   }
 
+  li{
+    padding: 2px;
+  }
+
 }
 
 #carousel {
-  width:726px;  //Need to remove padding 37 for the next and prev buttons
+  width: 576px;  //Need to remove padding 37 for the next and prev buttons- 150px for floorplanLocation
   //height:200px;
-
-
 }
 #panorama {
     width: 100%;
@@ -64,24 +107,13 @@
 }
 .mapMarker {
     position: absolute;
-    width: 40px;
-    height: 40px;
-    transform-origin: 50% 100%;
+    transform-origin: 50% 50%;
 }
 i.z-depth-1:hover {
     //box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     top: 29.5% !important;
 }
-i {
-    font-size: 20px !important;
-    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
-}
-#homeButton {
-    float: right;
-    position: absolute;
-    right: 10px;
-    top: 10px;
-}
+
 #leftButton {
     float: left;
     position: absolute;

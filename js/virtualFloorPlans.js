@@ -2,14 +2,46 @@ var _pictureIndex = 0;
 var cameraPoints = [];
 var data;
 
+
+
+function removeIconClicks() {
+    $('.clickCamera').off('click');
+}
+
+function removeFloorPlanClicks() {
+    $('#floorPlan').off('click');
+}
+
+function showFloorPlan() {
+    $('#pictureContainer').hide();
+    moveFloorPlanToMainArea(removeFloorPlanClicks);
+}
+
+function highlightIcon(pictureIndex) {
+    $('#floorPlan .mapMarker').removeClass(this.json.config.secondaryColor + '-text').addClass('text-' + this.json.config.lightenColor).addClass(this.json.config.mainColor + '-text')
+    var $floorPlanIcon = $('#floorPlan').find("[pictureindex='" + pictureIndex + "']");
+    $floorPlanIcon.removeClass(this.json.config.mainColor + '-text').removeClass('text-' + this.json.config.lightenColor);
+    $floorPlanIcon.addClass(this.json.config.secondaryColor + '-text');
+
+    $('#carousel img').css('border', '2px solid white');
+
+
+    var $carouselPicture = $('#carousel').find("li[pictureindex='" + pictureIndex + "'] img");
+    $carouselPicture.css('border', '2px solid ' + $floorPlanIcon.css('color'));
+    this.elastislide.setCurrent(pictureIndex);
+
+
+}
+
+
 function clickCamera(pictureIndex) {
-    if (pictureIndex==undefined){
-      throw new Error("Can't show picture. No Picture Index supplied");
+    highlightIcon(pictureIndex);
+    if (pictureIndex == undefined) {
+        throw new Error("Can't show picture. No Picture Index supplied");
     }
     var element = $('#floorPlan').find("[pictureindex='" + pictureIndex + "']");
 
     $('#pictureContainer').show();
-    $('#floorPlan').hide();
     if (element.hasClass("fa-camera")) {
         $("#pictureViewer").css({
             "background": "url('" + $(element).attr('ref') + "')",
@@ -28,24 +60,139 @@ function clickCamera(pictureIndex) {
     }
 }
 
-function makeContainer(id,json){
-  var mainColor = json.config.mainColor;
-  $('#'+id).append(''
-    +'<div id="vContainer" class="z-depth-1">'
-      +'<div id="imageArea">'
-        +'<div id="floorPlan">'
-          +'<i id="visibleButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-eye" aria-hidden="true"></i>'
-        +'</div>'
-        +'<div id="pictureContainer">'
-          +'<div id="panorama"></div>'
-          +'<div id="pictureViewer"></div>'
-          +'<i id="homeButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-home" aria-hidden="true"></i>'
-          +'<i id="leftButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-arrow-left" aria-hidden="true"></i>'
-          +'<i id="rightButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-arrow-right" aria-hidden="true"></i>'
-        +'</div>'
-      +'</div>'
-      +'<ul id="carousel" class="elastislide-list">'
-    +'</div>');
+function moveFloorPlanToThumbnail(callback) {
+    if ($("#floorPlan").hasClass("minimised")) {
+        if (callback) {
+            callback()
+        }
+    }
+    var $floorPlanLocation = $("#floorPlanLocation");
+    var $navArea = $('#navArea');
+    $("#floorPlan .btn-floating").animate({
+        "opacity": 0
+    }, {
+        duration: 100,
+        queue: false,
+        complete: function() {
+            console.log("buttons hidden")
+            $("#floorPlan .btn-floating").hide();
+        }
+    });
+    $("#floorPlan .mapMarker").animate({
+        "font-size": 8
+    }, {
+        duration: 100,
+        queue: false
+    });
+
+
+    $("#floorPlan").animate({
+        width: $floorPlanLocation.width()
+    }, {
+        duration: 200,
+        queue: false
+    });
+
+    $("#floorPlan").animate({
+        top: $navArea.position().top + $floorPlanLocation.innerWidth() - $floorPlanLocation.width(),
+        left: $floorPlanLocation.innerWidth() - $floorPlanLocation.width(),
+
+        height: $floorPlanLocation.height(),
+    }, {
+        duration: 300,
+        queue: false,
+        complete: function() {
+            removeIconClicks();
+            $("#floorPlan").addClass("minimised");
+            $("#floorPlan").on('click', showFloorPlan);
+            if (callback) {
+                callback();
+            }
+        }
+    });
+}
+
+function moveFloorPlanToMainArea(callback) {
+
+    if (!$("#floorPlan").hasClass("minimised")) {
+        if (callback) {
+            callback()
+        }
+    }
+    $("#floorPlan .btn-floating").show();
+    setTimeout(function() {
+        $("#floorPlan .btn-floating").animate({
+            "opacity": 1
+        }, {
+            duration: 100,
+            queue: false
+        });
+        $("#floorPlan .mapMarker").animate({
+            "font-size": 20
+        }, {
+            duration: 100,
+            queue: false
+        });
+    }, 200);
+    setTimeout(function() {
+        $("#floorPlan").animate({
+            width: "100%"
+        }, {
+            duration: 200,
+            queue: false
+        });
+    }, 100);
+
+
+
+    $("#floorPlan").animate({
+        top: 0,
+        left: 0,
+        height: 600,
+    }, {
+        duration: 300,
+        queue: false,
+        complete: function() {
+            addIconClicks();
+            $("#floorPlan").removeClass("minimised");
+            if (callback) {
+                callback();
+            }
+        }
+    });
+}
+
+function addIconClicks() {
+    $('.clickCamera').on('click', function() {
+        var pictureIndex = $(this).attr('pictureindex');
+        return moveFloorPlanToThumbnail(function() {
+            clickCamera(pictureIndex)
+        });
+    });
+}
+
+function makeContainer(id, json) {
+    var mainColor = json.config.mainColor;
+    $('#' + id).append('' +
+        '<div id="vContainer" class="z-depth-1">' +
+        '<div id="floorPlan">' +
+        '<i id="visibleButton" class="btn-floating btn-large waves-effect waves-light ' + mainColor + ' fa fa-eye" aria-hidden="true"></i>' +
+        '</div>' +
+        '<div id="pictureContainer">' +
+        '<div id="panorama"></div>' +
+        '<div id="pictureViewer"></div>' +
+        '<i id="leftButton" class="btn-floating btn-large waves-effect waves-light ' + mainColor + ' fa fa-arrow-left" aria-hidden="true"></i>' +
+        '<i id="rightButton" class="btn-floating btn-large waves-effect waves-light ' + mainColor + ' fa fa-arrow-right" aria-hidden="true"></i>' +
+        '</div>' +
+        '<div id="imageArea">' +
+        '</div>' +
+        '<div id="navArea">' +
+        '<div id="floorPlanLocation"></div>' +
+        '<div id="carouselLocation">' +
+        '<ul id="carousel" class="elastislide-list">' +
+        '</div>' +
+        '</div>' +
+        '</div>');
 
 }
 
@@ -53,7 +200,7 @@ function makeContainer(id,json){
 
 function loadFloorPlan(id, json) {
     makeContainer(id, json);
-    json = json;
+    this.json = json;
 
     var pictureIndex = 0;
 
@@ -86,7 +233,7 @@ function loadFloorPlan(id, json) {
         for (var j = 0; j < floor.location.length; j++) {
             var location = floor.location[j];
 
-            var template = $('<i class="clickCamera fa animated mapMarker '+json.config.mainColor+'-text text-'+json.config.lightenColor+'" aria-hidden="true"></i>');
+            var template = $('<i class="clickCamera fa animated mapMarker ' + json.config.mainColor + '-text text-' + json.config.lightenColor + '" aria-hidden="true"></i>');
             template.css({
                 "left": location.left,
                 "top": location.top,
@@ -102,15 +249,22 @@ function loadFloorPlan(id, json) {
             template.attr('ref', location.url);
             $('#floorPlan').append(template);
             cameraPoints.push(location);
-            $carousel.append('<li pictureindex="'+pictureIndex+'"><a href="#"><img width="150" height="120" src="'+location.url+'"/></a></li>')
+            $carousel.append('<li pictureindex="' + pictureIndex + '"><a href="#"><img width="150" height="120" src="' + location.url + '"/></a></li>')
             pictureIndex++;
         }
     }
-    $('#carousel').elastislide({'onReady':function(){
-      $('.elastislide-wrapper nav span').addClass(json.config.mainColor);
-    },"onClick":function( element, position, evt ){
-      clickCamera(element.attr('pictureindex'));
-    }});
+    this.elastislide= $('#carousel').elastislide({
+        'onReady': function() {
+            $('.elastislide-wrapper nav span').addClass(json.config.mainColor);
+            highlightIcon(0);
+
+        },
+        "onClick": function(element, position, evt) {
+            moveFloorPlanToThumbnail(function() {
+                clickCamera(element.attr('pictureindex'))
+            });
+        }
+    });
 
     $('#floor1').click();
 
@@ -121,7 +275,7 @@ function loadFloorPlan(id, json) {
             console.log("Visible")
             setTimeout(function() {
                 console.log("Hide")
-                $('#visibleButton').removeClass("waves-"+json.config.mainColor);
+                $('#visibleButton').removeClass("waves-" + json.config.mainColor);
                 $('#visibleButton').addClass("waves-light");
             }, 500)
             $(this).removeClass("accent-1");
@@ -132,7 +286,7 @@ function loadFloorPlan(id, json) {
         } else {
             setTimeout(function() {
                 console.log("Hide")
-                $('#visibleButton').addClass("waves-"+json.config.mainColor);
+                $('#visibleButton').addClass("waves-" + json.config.mainColor);
                 $('#visibleButton').removeClass("waves-light");
             }, 500)
             $('#visibleButton').addClass("accent-1");
@@ -145,15 +299,7 @@ function loadFloorPlan(id, json) {
 
     })
 
-
-    $('.clickCamera').on('click', function() {
-        var pictureIndex = $(this).attr('pictureindex');
-        return clickCamera(pictureIndex)
-    });
-    $('#homeButton').on('click', function() {
-        $('#pictureContainer').hide();
-        $('#floorPlan').show();
-    });
+    addIconClicks();
 
     $('#leftButton').on('click', function() {
         console.log("clicked left");
