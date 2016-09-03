@@ -1,4 +1,9 @@
-{"data":
+{"config": {
+    "mainColor": "blue",
+    "lightenColor": "lighten-3",
+    "darkenColor": "darken-2"
+},
+"data":
 
   [
     {"number":1,

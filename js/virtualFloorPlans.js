@@ -25,20 +25,39 @@ function clickCamera(element) {
     }
 }
 
-function loadFloorPlan(data) {
-    data = data;
+function makeContainer(id,json){
+  var mainColor = json.config.mainColor;
+  $('#'+id).append(''
+    +'<div id="floorPlan" class="z-depth-1">'
+      +'<i id="visibleButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-eye" aria-hidden="true"></i>'
+    +'</div>'
+    +'<div id="pictureContainer">'
+      +'<div id="panorama"></div>'
+      +'<div id="pictureViewer"></div>'
+      +'<i id="homeButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-home" aria-hidden="true"></i>'
+      +'<i id="leftButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-arrow-left" aria-hidden="true"></i>'
+      +'<i id="rightButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-arrow-right" aria-hidden="true"></i>'
+      +'</div>');
+
+
+}
+
+function loadFloorPlan(id, json) {
+    makeContainer(id, json);
+    json = json;
 
     var pictureIndex = 0;
 
-    for (var i = 0; i < data.length; i++) {
-        var floor = data[i];
-        var floorButton = $('<div id="floor' + floor.number + '" class="floorButton btn-floating btn red">' + floor.number + '</div>');
+    for (var i = 0; i < json.data.length; i++) {
+        var floor = json.data[i];
+        var floorButton = $('<div id="floor' + floor.number + '" class="floorButton btn-floating btn">' + floor.number + '</div>');
+        floorButton.addClass(json.config.mainColor);
         floorButton.attr("ref", floor.url);
         floorButton.attr("floor", floor.number);
         $('#floorPlan').append(floorButton);
 
         if (i > 0) {
-            floorButton.addClass(" accent-1");
+            floorButton.addClass(json.config.lightenColor);
         }
         floorButton.css('top', (80 + 50 * i) + "px");
         $(floorButton).on('click', function() {
@@ -50,29 +69,28 @@ function loadFloorPlan(data) {
             $('.mapMarker').hide();
             $('.floor' + $(this).attr("floor")).show();
             $('.floorButton').addClass('waves-effect waves-light');
-            $('.floorButton').removeClass('accent-1');
+            $('.floorButton').removeClass(json.config.lightenColor);
             $(this).removeClass('waves-effect waves-light');
-            $(this).addClass('accent-1');
+            $(this).addClass(json.config.lightenColor);
         });
 
         for (var j = 0; j < floor.location.length; j++) {
             var location = floor.location[j];
 
-            var template = $('<div class="animated mapMarker"><i  class="clickCamera animated fa" aria-hidden="true"></i></div></div>');
+            var template = $('<i class="clickCamera fa animated mapMarker '+json.config.mainColor+'-text text-'+json.config.lightenColor+'" aria-hidden="true"></i>');
             template.css({
                 "left": location.left,
                 "top": location.top,
                 "transform": "rotate(" + location.rotation + "deg)"
             })
             template.addClass("floor" + (i + 1));
-            template.find('.fa').attr('pictureindex', pictureIndex++);
+            template.attr('pictureindex', pictureIndex++);
             if (location.type == "camera") {
-                template.find('.fa').addClass("fa-camera");
+                template.addClass("fa-camera");
             } else {
-                template.find('.fa').addClass("fa-dot-circle-o");
-                template.find('.cone').remove();
+                template.addClass("fa-dot-circle-o");
             }
-            template.find('.fa').attr('ref', location.url);
+            template.attr('ref', location.url);
             $('#floorPlan').append(template);
             cameraPoints.push(location);
         }
@@ -87,7 +105,7 @@ function loadFloorPlan(data) {
             console.log("Visible")
             setTimeout(function() {
                 console.log("Hide")
-                $('#visibleButton').removeClass("waves-red");
+                $('#visibleButton').removeClass("waves-"+json.config.mainColor);
                 $('#visibleButton').addClass("waves-light");
             }, 500)
             $(this).removeClass("accent-1");
@@ -98,7 +116,7 @@ function loadFloorPlan(data) {
         } else {
             setTimeout(function() {
                 console.log("Hide")
-                $('#visibleButton').addClass("waves-red");
+                $('#visibleButton').addClass("waves-"+json.config.mainColor);
                 $('#visibleButton').removeClass("waves-light");
             }, 500)
             $('#visibleButton').addClass("accent-1");
