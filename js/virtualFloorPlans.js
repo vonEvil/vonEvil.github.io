@@ -2,19 +2,22 @@ var _pictureIndex = 0;
 var cameraPoints = [];
 var data;
 
-function clickCamera(element) {
+function clickCamera(pictureIndex) {
+    if (pictureIndex==undefined){
+      throw new Error("Can't show picture. No Picture Index supplied");
+    }
+    var element = $('#floorPlan').find("[pictureindex='" + pictureIndex + "']");
+
     $('#pictureContainer').show();
     $('#floorPlan').hide();
-    if ($(element).hasClass("fa-camera")) {
-        _pictureIndex = parseInt($(element).attr('pictureIndex'));
-
+    if (element.hasClass("fa-camera")) {
         $("#pictureViewer").css({
             "background": "url('" + $(element).attr('ref') + "')",
             "background-size": "100% 100%"
         });
         $("#panorama").hide();
         $("#pictureViewer").show();
-    } else if ($(element).hasClass("fa-dot-circle-o")) {
+    } else if (element.hasClass("fa-dot-circle-o")) {
         $("#panorama").show();
         $("#pictureViewer").hide();
         pannellum.viewer('panorama', {
@@ -28,18 +31,18 @@ function clickCamera(element) {
 function makeContainer(id,json){
   var mainColor = json.config.mainColor;
   $('#'+id).append(''
-    +'<div id="floorPlan" class="z-depth-1">'
-      +'<i id="visibleButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-eye" aria-hidden="true"></i>'
-    +'</div>'
-    +'<div id="pictureContainer">'
-      +'<div id="panorama"></div>'
-      +'<div id="pictureViewer"></div>'
-      +'<i id="homeButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-home" aria-hidden="true"></i>'
-      +'<i id="leftButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-arrow-left" aria-hidden="true"></i>'
-      +'<i id="rightButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-arrow-right" aria-hidden="true"></i>'
-      +'</div>');
-
-
+    +'<div id="vContainer" class="z-depth-1">'
+      +'<div id="floorPlan">'
+        +'<i id="visibleButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-eye" aria-hidden="true"></i>'
+      +'</div>'
+      +'<div id="pictureContainer">'
+        +'<div id="panorama"></div>'
+        +'<div id="pictureViewer"></div>'
+        +'<i id="homeButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-home" aria-hidden="true"></i>'
+        +'<i id="leftButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-arrow-left" aria-hidden="true"></i>'
+        +'<i id="rightButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-arrow-right" aria-hidden="true"></i>'
+      +'</div>'
+    +'</div>');
 }
 
 function loadFloorPlan(id, json) {
@@ -131,7 +134,8 @@ function loadFloorPlan(id, json) {
 
 
     $('.clickCamera').on('click', function() {
-        return clickCamera(this)
+        var pictureIndex = $(this).attr('pictureindex');
+        return clickCamera(pictureIndex)
     });
     $('#homeButton').on('click', function() {
         $('#pictureContainer').hide();
@@ -142,15 +146,15 @@ function loadFloorPlan(id, json) {
         console.log("clicked left");
         _pictureIndex--;
         _pictureIndex = (cameraPoints.length + _pictureIndex) % cameraPoints.length;
-        var previousCamera = $('#floorPlan').find("[pictureindex='" + _pictureIndex + "']");
-        clickCamera(previousCamera[0]);
+        clickCamera(_pictureIndex);
     });
+
+
 
     $('#rightButton').on('click', function() {
         console.log("clicked right");
         _pictureIndex++;
         _pictureIndex = (cameraPoints.length + _pictureIndex) % cameraPoints.length;
-        var previousCamera = $('#floorPlan').find("[pictureindex='" + _pictureIndex + "']");
-        clickCamera(previousCamera[0]);
+        clickCamera(_pictureIndex);
     });
 }
