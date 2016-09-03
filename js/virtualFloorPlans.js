@@ -93,7 +93,7 @@ function loadFloorPlan(id, json) {
                 "transform": "rotate(" + location.rotation + "deg)"
             })
             template.addClass("floor" + (i + 1));
-            template.attr('pictureindex', pictureIndex++);
+            template.attr('pictureindex', pictureIndex);
             if (location.type == "camera") {
                 template.addClass("fa-camera");
             } else {
@@ -102,10 +102,16 @@ function loadFloorPlan(id, json) {
             template.attr('ref', location.url);
             $('#floorPlan').append(template);
             cameraPoints.push(location);
-            $carousel.append('<li><a href="#"><img width="150" height="120" src="'+location.url+'"/></a></li>')
+            $carousel.append('<li pictureindex="'+pictureIndex+'"><a href="#"><img width="150" height="120" src="'+location.url+'"/></a></li>')
+            pictureIndex++;
         }
     }
-    $('#carousel').elastislide();
+    $('#carousel').elastislide({'onReady':function(){
+      $('.elastislide-wrapper nav span').addClass(json.config.mainColor);
+    },"onClick":function( element, position, evt ){
+      clickCamera(element.attr('pictureindex'));
+    }});
+
     $('#floor1').click();
 
 
