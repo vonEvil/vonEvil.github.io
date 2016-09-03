@@ -32,18 +32,24 @@ function makeContainer(id,json){
   var mainColor = json.config.mainColor;
   $('#'+id).append(''
     +'<div id="vContainer" class="z-depth-1">'
-      +'<div id="floorPlan">'
-        +'<i id="visibleButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-eye" aria-hidden="true"></i>'
+      +'<div id="imageArea">'
+        +'<div id="floorPlan">'
+          +'<i id="visibleButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-eye" aria-hidden="true"></i>'
+        +'</div>'
+        +'<div id="pictureContainer">'
+          +'<div id="panorama"></div>'
+          +'<div id="pictureViewer"></div>'
+          +'<i id="homeButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-home" aria-hidden="true"></i>'
+          +'<i id="leftButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-arrow-left" aria-hidden="true"></i>'
+          +'<i id="rightButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-arrow-right" aria-hidden="true"></i>'
+        +'</div>'
       +'</div>'
-      +'<div id="pictureContainer">'
-        +'<div id="panorama"></div>'
-        +'<div id="pictureViewer"></div>'
-        +'<i id="homeButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-home" aria-hidden="true"></i>'
-        +'<i id="leftButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-arrow-left" aria-hidden="true"></i>'
-        +'<i id="rightButton" class="btn-floating btn-large waves-effect waves-light '+mainColor+' fa fa-arrow-right" aria-hidden="true"></i>'
-      +'</div>'
+      +'<ul id="carousel" class="elastislide-list">'
     +'</div>');
+
 }
+
+
 
 function loadFloorPlan(id, json) {
     makeContainer(id, json);
@@ -76,7 +82,7 @@ function loadFloorPlan(id, json) {
             $(this).removeClass('waves-effect waves-light');
             $(this).addClass(json.config.lightenColor);
         });
-
+        var $carousel = $('#carousel');
         for (var j = 0; j < floor.location.length; j++) {
             var location = floor.location[j];
 
@@ -96,9 +102,10 @@ function loadFloorPlan(id, json) {
             template.attr('ref', location.url);
             $('#floorPlan').append(template);
             cameraPoints.push(location);
+            $carousel.append('<li><a href="#"><img width="150" height="120" src="'+location.url+'"/></a></li>')
         }
     }
-
+    $('#carousel').elastislide();
     $('#floor1').click();
 
 

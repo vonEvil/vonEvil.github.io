@@ -2616,9 +2616,16 @@ html {
   box-sizing: border-box;
 }
 
+
 *, *:before, *:after {
-  box-sizing: inherit;
+/**  box-sizing: inherit;*/
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+padding: 0;
+margin: 0;
 }
+
 
 ul {
   padding: 0;

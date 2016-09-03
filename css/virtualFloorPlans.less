@@ -1,115 +1,107 @@
+#container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+#vContainer {
+    position: relative;
 
-    #container{
-      position:absolute;
-      top: 20px;
-      left: 20px;
-    }
-
-    #vContainer{
-      position:absolute;
-      width: 800px;
-      height: 600px;
-
+    #imageArea{
+      width:800px;
+      height:600px;
 
       #pictureContainer {
           display: none;
-          width:100%;
-          height:100%;
+          width: 100%;
+          height: 100%;
       }
 
     }
 
 
 
+}
 
-    #panorama {
-        width: 100%;
-        height: 100%;
+.elastislide-wrapper{
+  nav{
+    height: 0px;
+    line-height: 0px;
+  }
 
-    }
+}
 
-    #pictureViewer {
-        width: 100%;
-        height: 100%;
-
-    }
-
-    #floorPlan {
-        width: 800px;
-        height: 600px;
-        background-color: red;
-        -webkit-background-size: contain;
-        -moz-background-size: contain;
-        -o-background-size: contain;
-        background-size: contain;
-        position: absolute;
-    }
-
-    .mapMarker>i{
-      position: absolute;
-      top: 64%;
-      left: 20.6%;
-
-    }
-
-    .floor2{
-      display:none;
-    }
-
-    .mapMarker{
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      transform-origin: 50% 100%;
-
-    }
-
-    i.z-depth-1:hover{
-        //box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
-        top: 29.5% !important;
-    }
-
-    i{
-      font-size: 20px !important;
-      text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
-    }
-
-    #homeButton{
-      float:right;
-      position:absolute;
-      right: 10px;
-      top: 10px;
-
-    }
-
-    #leftButton{
-      float:left;
-      position:absolute;
-      left: 5px;
-      top: 235px;
-
-    }
-
-    #rightButton{
-      float:right;
-      position:absolute;
-      right: 5px;
-      top: 235px;
-
-    }
+#carousel {
+  width:726px;  //Need to remove padding 37 for the next and prev buttons
+  //height:200px;
 
 
-    .floorButton{
-      float:right;
-      right: 19px;
-      position: absolute;
-    }
-
-
-    #visibleButton{
-      float:right;
-      right: 10px;
-      top: 10px;
-      position: absolute;
-    }
+}
+#panorama {
+    width: 100%;
+    height: 100%;
+}
+#pictureViewer {
+    width: 100%;
+    height: 100%;
+}
+#floorPlan {
+    width: 800px;
+    height: 600px;
+    background-color: red;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    -o-background-size: contain;
+    background-size: contain;
+    position: absolute;
+}
+.mapMarker > i {
+    position: absolute;
+    top: 64%;
+    left: 20.6%;
+}
+.floor2 {
+    display: none;
+}
+.mapMarker {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    transform-origin: 50% 100%;
+}
+i.z-depth-1:hover {
+    //box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    top: 29.5% !important;
+}
+i {
+    font-size: 20px !important;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+}
+#homeButton {
+    float: right;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+#leftButton {
+    float: left;
+    position: absolute;
+    left: 5px;
+    top: 235px;
+}
+#rightButton {
+    float: right;
+    position: absolute;
+    right: 5px;
+    top: 235px;
+}
+.floorButton {
+    float: right;
+    right: 19px;
+    position: absolute;
+}
+#visibleButton {
+    float: right;
+    right: 10px;
+    top: 10px;
+    position: absolute;
+}
