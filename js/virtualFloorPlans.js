@@ -34,7 +34,8 @@ function highlightIcon(pictureIndex) {
 }
 
 
-function clickCamera(pictureIndex) {
+function changePictureTo(pictureIndex, direction) {
+    console.log("called changePictureTo");
     highlightIcon(pictureIndex);
     if (pictureIndex == undefined) {
         throw new Error("Can't show picture. No Picture Index supplied");
@@ -42,7 +43,12 @@ function clickCamera(pictureIndex) {
     var element = $('#floorPlan').find("[pictureindex='" + pictureIndex + "']");
 
     $('#pictureContainer').show();
+
     if (element.hasClass("fa-camera")) {
+        if (direction == "UP"){
+          movePictureUp();
+        }
+
         $("#pictureViewer").css({
             "background": "url('" + $(element).attr('ref') + "')",
             "background-size": "100% 100%"
@@ -50,20 +56,57 @@ function clickCamera(pictureIndex) {
         $("#panorama").hide();
         $("#pictureViewer").show();
     } else if (element.hasClass("fa-dot-circle-o")) {
-        $("#panorama").show();
-        $("#pictureViewer").hide();
-        pannellum.viewer('panorama', {
-            "type": "equirectangular",
-            "panorama": $(element).attr('ref'),
-            "autoLoad": true
+      $("#panorama").show();
+      $("#pictureViewer").hide();
+      if (direction == "UP"){
+        movePictureUp(function(){
+          load360Picture($(element).attr('ref'));
         });
+      } else{
+          load360Picture($(element).attr('ref'));
+      }
+
+
     }
 }
+
+function load360Picture(reference){
+  pannellum.viewer('panorama', {
+      "type": "equirectangular",
+      "panorama": reference,
+      "autoLoad": true
+  });
+}
+
+function movePictureUp(callback){
+  var targetWidth = $('#imageArea').width();
+  var targetHeight = $('#imageArea').height();
+
+  $('#pictureContainer').css({"top":targetHeight,"left":targetWidth/2});
+  $('#pictureContainer').height("0px");
+  $('#pictureContainer').width("0px");
+  $("#pictureContainer").animate({
+      "width": targetWidth,
+      "height": targetHeight,
+      "top": 0,
+      "left": 0
+  }, {
+      duration: 175,
+      queue: false,
+      complete : function(){
+        if (callback){
+         callback()
+       }
+     }
+  });
+}
+
 
 function moveFloorPlanToThumbnail(callback) {
     if ($("#floorPlan").hasClass("minimised")) {
         if (callback) {
             callback()
+            return;
         }
     }
     var $floorPlanLocation = $("#floorPlanLocation");
@@ -117,6 +160,7 @@ function moveFloorPlanToMainArea(callback) {
     if (!$("#floorPlan").hasClass("minimised")) {
         if (callback) {
             callback()
+            return;
         }
     }
     $("#floorPlan .btn-floating").show();
@@ -166,7 +210,7 @@ function addIconClicks() {
     $('.clickCamera').on('click', function() {
         var pictureIndex = $(this).attr('pictureindex');
         return moveFloorPlanToThumbnail(function() {
-            clickCamera(pictureIndex)
+            changePictureTo(pictureIndex,"UP")
         });
     });
 }
@@ -261,7 +305,7 @@ function loadFloorPlan(id, json) {
         },
         "onClick": function(element, position, evt) {
             moveFloorPlanToThumbnail(function() {
-                clickCamera(element.attr('pictureindex'))
+                return changePictureTo(element.attr('pictureindex'),"UP")
             });
         }
     });
@@ -305,7 +349,7 @@ function loadFloorPlan(id, json) {
         console.log("clicked left");
         _pictureIndex--;
         _pictureIndex = (cameraPoints.length + _pictureIndex) % cameraPoints.length;
-        clickCamera(_pictureIndex);
+        changePictureTo(_pictureIndex,"LEFT");
     });
 
 
@@ -314,6 +358,6 @@ function loadFloorPlan(id, json) {
         console.log("clicked right");
         _pictureIndex++;
         _pictureIndex = (cameraPoints.length + _pictureIndex) % cameraPoints.length;
-        clickCamera(_pictureIndex);
+        changePictureTo(_pictureIndex,"RIGHT");
     });
 }
