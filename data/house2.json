@@ -1,8 +1,8 @@
 {"config": {
-    "mainColor": "blue",
+    "mainColor": "green",
     "lightenColor": "lighten-2",
     "darkenColor": "darken-3",
-    "secondaryColor": "red"
+    "secondaryColor": "orange"
 },
 "data":
 
