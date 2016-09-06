@@ -10,6 +10,7 @@ function removeIconClicks() {
 
 function removeFloorPlanClicks() {
     $('#floorPlan').off('click');
+    $('#floorPlan').css('overflow','visible')
 }
 
 function showFloorPlan() {
@@ -32,6 +33,18 @@ function resize(){
   $vContainer.find('#pictureContainer').css({'height':topAreaHeight});
   var $floorPlanImage = $vContainer.find('.minimised').css("top",topAreaHeight+padding);
   $('.elastislide-wrapper').width(topAreaWidth-$('#floorPlanLocation').width()-padding*2)
+  var $floorPlan = $vContainer.find('#floorPlan');
+  if ($floorPlan.width()<$vContainer.width()){
+    $floorPlan.find('.btn-floating').css('right','-40px');
+  }
+
+  if ($vContainer.width()<544){
+    $('#carouselLocation').hide();
+    $('#floorPlanLocation').css({'float':'none','margin':'auto','position':'relative'})
+  }else{
+    $('#carouselLocation').show();
+    $('#floorPlanLocation').css({'float':'left','margin':'none','position':'relative'})
+  }
 
 }
 
@@ -191,10 +204,13 @@ function moveFloorPlanToThumbnail(callback) {
         duration: 150,
         queue: false
     });
+    console.log("moving floorPlan down marginLeft["+$floorPlanLocation.css('marginLeft').replace('px','')+"] innerWidth["+$floorPlanLocation.innerWidth()+"] width["+$floorPlanLocation.width()+"]");
 
+    var leftValue =parseInt($floorPlanLocation.css('marginLeft').replace('px',''))+ $floorPlanLocation.innerWidth() - $floorPlanLocation.width();
+    console.log("moving floorPlan down left["+leftValue+"]");
     $("#floorPlan").animate({
         top: $navArea.position().top + $floorPlanLocation.innerWidth() - $floorPlanLocation.width(),
-        left: $floorPlanLocation.innerWidth() - $floorPlanLocation.width(),
+        left: leftValue,
 
         height: $floorPlanLocation.height(),
     }, {
@@ -203,7 +219,7 @@ function moveFloorPlanToThumbnail(callback) {
         complete: function() {
             $("#floorPlan .floorPlanImage").css({'max-width': $floorPlanLocation.width(), 'max-height':$floorPlanLocation.height()})
             $("#floorPlan").width($("#floorPlan .floorPlanImage").width());
-            $("#floorPlan").css('left',($floorPlanLocation.innerWidth()-$("#floorPlan .floorPlanImage").width())/2);
+            //$("#floorPlan").css('left',($floorPlanLocation.innerWidth()-$("#floorPlan .floorPlanImage").width())/2);
             removeIconClicks();
             $("#floorPlan").addClass("minimised");
             $("#floorPlan").on('click', showFloorPlan);

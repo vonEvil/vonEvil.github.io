@@ -2,56 +2,65 @@
     "config": {
         "mainColor": "blue",
         "lightenColor": "lighten-3",
-        "teriaryColor": "darken-2",
+        "darkenColor": "darken-2",
         "secondaryColor": "red"
     },
 
     "data": [{
         "number": 1,
+        "uuid":"floor1",
         "url": "./assets/woodlands/WoodlandsRd_1.png",
         "location": [{
+                "uuid":"location1",
                 "left": "62%",
                 "top": "74%",
                 "rotation": 340,
-                "type": "360",
+                "type": "Camera360",
                 "url": "./assets/woodlands/hall.jpg"
             }, {
+                "uuid":"location2",
                 "left": "47%",
                 "top": "35%",
                 "rotation": 340,
-                "type": "360",
+                "type": "Camera360",
                 "url": "./assets/woodlands/kitchen1.jpg"
             }, {
+                "uuid":"location3",
                 "left": "47%",
                 "top": "72%",
                 "rotation": 340,
-                "type": "360",
+                "type": "Camera360",
                 "url": "./assets/woodlands/conservatory.jpg"
             }, {
+                "uuid":"location4",
                 "left": "18%",
                 "top": "18%",
                 "rotation": 340,
-                "type": "360",
+                "type": "Camera360",
                 "url": "./assets/woodlands/study.jpg"
             }, {
+                "uuid":"location5",
                 "left": "78%",
                 "top": "59%",
                 "rotation": 340,
-                "type": "360",
+                "type": "Camera360",
                 "url": "./assets/woodlands/sittingroom.jpg"
             }, {
+                "uuid":"location6",
                 "left": "39%",
                 "top": "57%",
                 "rotation": 20,
                 "type": "camera",
                 "url": "./assets/woodlands/kitchen_still1.jpg"
             }, {
+                "uuid":"location7",
                 "left": "86%",
                 "top": "39%",
                 "rotation": 200,
                 "type": "camera",
                 "url": "./assets/woodlands/sittingroom_still1.jpg"
             }, {
+                "uuid":"location8",
                 "left": "63%",
                 "top": "47%",
                 "rotation": 0,
@@ -62,39 +71,41 @@
         ]
     }, {
         "number": 2,
+        "uuid":"floor1",
         "url": "./assets/48CanterburyRd_2.jpg",
         "location": [{
+            "uuid":"location9",
             "left": "44%",
             "top": "32%",
             "rotation": 310,
             "type": "camera",
             "url": "./assets/48CanterburyRd_Bathroom.jpg"
         }, {
-            "left": "45%",
+            "uuid":"location10","left": "45%",
             "top": "25%",
             "rotation": 35,
             "type": "camera",
             "url": "./assets/48CanterburyRd_Bedroom1.jpg"
         }, {
-            "left": "64%",
+            "uuid":"location11","left": "64%",
             "top": "25%",
             "rotation": 320,
             "type": "camera",
             "url": "./assets/48CanterburyRd_Bedroom1_1.jpg"
         }, {
-            "left": "49%",
+            "uuid":"location12","left": "49%",
             "top": "53%",
             "rotation": 130,
             "type": "camera",
             "url": "./assets/48CanterburyRd_Bedroom2.jpg"
         }, {
-            "left": "43%",
+            "uuid":"location13","left": "43%",
             "top": "53%",
             "rotation": 200,
             "type": "camera",
             "url": "./assets/48CanterburyRd_Bedroom3.jpg"
         }, {
-            "left": "43%",
+            "uuid":"location14","left": "43%",
             "top": "13%",
             "rotation": 320,
             "type": "camera",
