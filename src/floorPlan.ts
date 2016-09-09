@@ -45,7 +45,8 @@ module VirtualFloorPlans {
 
   export class VirtualFloorPlan{
 
-    constructor(public containerSelectorId: string, public json: IFloorPlanJson){
+
+    constructor(public containerSelectorId: string, public floorPlanJson: IFloorPlanJson){
 
     }
 

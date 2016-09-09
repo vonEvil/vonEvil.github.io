@@ -38,8 +38,8 @@ declare module VirtualFloorPlans {
     }
     class VirtualFloorPlan {
         containerSelectorId: string;
-        json: IFloorPlanJson;
-        constructor(containerSelectorId: string, json: IFloorPlanJson);
+        floorPlanJson: IFloorPlanJson;
+        constructor(containerSelectorId: string, floorPlanJson: IFloorPlanJson);
     }
     class Carousel {
         constructor();
@@ -53,14 +53,17 @@ declare module VirtualFloorPlans {
 }
 declare module VirtualFloorPlans {
     class VirtualFloorPlanWithControls extends VirtualFloorPlan {
-        setIconLocation(locationUuid: number, x: number, y: number, rotation: number): void;
-        addIconLocation(floorPlanUuid: string, floorPlanLocation: IFloorPlanLocation): string;
-        removeIconLocation(iconUUID: number): boolean;
+        setIconLocation(locationUuid: string, left: number, top: number, rotation: number): boolean;
+        findFloorPlanLocation(locationUuid: string): IFloorPlanLocation;
+        addFloorPlanLocation(floorPlanUuid: string, floorPlanLocation: IFloorPlanLocation): string;
+        removeFloorPlanLocation(locationUuid: string): boolean;
         addFloorPlan(floorPlanData: IFloorPlanData): string;
-        removeFloorPlan(floorPlanUuid: number): boolean;
+        removeFloorPlan(floorPlanUuid: string): boolean;
+        findFloorPlan(floorPlanUuid: string): IFloorPlanData;
         setMainColor(color: string): void;
         setSecondaryColor(color: string): void;
         setLightenColor(color: string): void;
         setDarkenColor(color: string): void;
     }
 }
+declare function guid(): string;

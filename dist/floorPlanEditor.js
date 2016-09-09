@@ -21,9 +21,9 @@ var VirtualFloorPlans;
     })(VirtualFloorPlans.FloorPlanLocationType || (VirtualFloorPlans.FloorPlanLocationType = {}));
     var FloorPlanLocationType = VirtualFloorPlans.FloorPlanLocationType;
     var VirtualFloorPlan = (function () {
-        function VirtualFloorPlan(containerSelectorId, json) {
+        function VirtualFloorPlan(containerSelectorId, floorPlanJson) {
             this.containerSelectorId = containerSelectorId;
-            this.json = json;
+            this.floorPlanJson = floorPlanJson;
         }
         return VirtualFloorPlan;
     }());
@@ -54,29 +54,94 @@ var VirtualFloorPlans;
         function VirtualFloorPlanWithControls() {
             _super.apply(this, arguments);
         }
-        VirtualFloorPlanWithControls.prototype.setIconLocation = function (locationUuid, x, y, rotation) {
+        VirtualFloorPlanWithControls.prototype.setIconLocation = function (locationUuid, left, top, rotation) {
+            var floorPlanLocation = this.findFloorPlanLocation(locationUuid);
+            if (floorPlanLocation) {
+                floorPlanLocation.left = left;
+                floorPlanLocation.top = top;
+                floorPlanLocation.rotation = rotation;
+                return true;
+            }
+            return false;
         };
-        VirtualFloorPlanWithControls.prototype.addIconLocation = function (floorPlanUuid, floorPlanLocation) {
-            return "uuid";
+        VirtualFloorPlanWithControls.prototype.findFloorPlanLocation = function (locationUuid) {
+            for (var i = 0; i < this.floorPlanJson.data.length; i++) {
+                var floorPlanData = this.floorPlanJson.data[i];
+                for (var j = 0; j < floorPlanData.location.length; j++) {
+                    var floorPlanLocation = floorPlanData.location[j];
+                    if (floorPlanLocation.uuid == locationUuid) {
+                        return floorPlanLocation;
+                    }
+                }
+            }
+            return null;
         };
-        VirtualFloorPlanWithControls.prototype.removeIconLocation = function (iconUUID) {
+        VirtualFloorPlanWithControls.prototype.addFloorPlanLocation = function (floorPlanUuid, floorPlanLocation) {
+            var uuid = null;
+            var floorPlanData = this.findFloorPlan(floorPlanUuid);
+            if (floorPlanData) {
+                uuid = guid();
+                floorPlanLocation.uuid = uuid;
+                floorPlanData.location.push(floorPlanLocation);
+            }
+            return uuid;
+        };
+        VirtualFloorPlanWithControls.prototype.removeFloorPlanLocation = function (locationUuid) {
+            for (var i = 0; i < this.floorPlanJson.data.length; i++) {
+                var floorPlanData = this.floorPlanJson.data[i];
+                for (var j = 0; j < floorPlanData.location.length; j++) {
+                    var floorPlanLocation = floorPlanData.location[j];
+                    if (floorPlanLocation.uuid == locationUuid) {
+                        floorPlanData.location.splice(j, 1);
+                        return true;
+                    }
+                }
+            }
             return true;
         };
         VirtualFloorPlanWithControls.prototype.addFloorPlan = function (floorPlanData) {
-            return "uuid";
+            floorPlanData.uuid = guid();
+            this.floorPlanJson.data.push(floorPlanData);
+            return floorPlanData.uuid;
         };
         VirtualFloorPlanWithControls.prototype.removeFloorPlan = function (floorPlanUuid) {
-            return true;
+            var floorPlanData = this.findFloorPlan(floorPlanUuid);
+            if (floorPlanData != null) {
+                this.floorPlanJson.data.splice(this.floorPlanJson.data.indexOf(floorPlanData), 1);
+                return true;
+            }
+            return false;
+        };
+        VirtualFloorPlanWithControls.prototype.findFloorPlan = function (floorPlanUuid) {
+            for (var i = 0; i < this.floorPlanJson.data.length; i++) {
+                if (this.floorPlanJson.data[i].uuid == floorPlanUuid) {
+                    return this.floorPlanJson.data[i];
+                }
+            }
+            return null;
         };
         VirtualFloorPlanWithControls.prototype.setMainColor = function (color) {
+            this.floorPlanJson.config.mainColor = color;
         };
         VirtualFloorPlanWithControls.prototype.setSecondaryColor = function (color) {
+            this.floorPlanJson.config.secondaryColor = color;
         };
         VirtualFloorPlanWithControls.prototype.setLightenColor = function (color) {
+            this.floorPlanJson.config.lightenColor = color;
         };
         VirtualFloorPlanWithControls.prototype.setDarkenColor = function (color) {
+            this.floorPlanJson.config.darkenColor = color;
         };
         return VirtualFloorPlanWithControls;
     }(VirtualFloorPlans.VirtualFloorPlan));
     VirtualFloorPlans.VirtualFloorPlanWithControls = VirtualFloorPlanWithControls;
 })(VirtualFloorPlans || (VirtualFloorPlans = {}));
+function guid() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+}

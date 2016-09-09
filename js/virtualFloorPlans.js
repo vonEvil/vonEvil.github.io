@@ -46,6 +46,7 @@ function resize(){
     $('#floorPlanLocation').css({'float':'left','margin':'none','position':'relative'})
   }
 
+  $vContainer.show();
 }
 
 function highlightIcon(pictureIndex) {
