@@ -2,7 +2,9 @@ var _pictureIndex = 0;
 var cameraPoints = [];
 var data;
 var padding = 10;
-
+var floorPlanMaxWidth = 600;
+var floorPlanMaxHeight = 400;
+var vContainerMinHeight = 400+149+10;
 
 function removeIconClicks() {
     $('.clickCamera').off('click');
@@ -24,20 +26,22 @@ function resize(){
   var $container = $('#'+this.id);
   var $vContainer = $('#vContainer');
 
-  $vContainer.css({'left':padding,'top':padding,'width':$container.width()-padding *2, 'height':$container.height()-padding *2});
+  var vContainerHeight=$container.height()-padding *2;
+  if (vContainerHeight<vContainerMinHeight){
+    vContainerHeight= vContainerMinHeight;
+  }
+  $vContainer.css({'left':padding,'top':padding,'width':$container.width()-padding *2, 'height':vContainerHeight});
   var topAreaWidth= $container.width()-padding *2;
   var topAreaHeight= $container.height()-padding *2-150;
+  var $topArea = $vContainer.find('.topArea');
   var $floorPlanImage = $vContainer.find('.topArea .floorPlanImage');
-  $floorPlanImage.css({'max-width':topAreaWidth,'max-height':topAreaHeight});
+  $floorPlanImage.css({'max-width':floorPlanMaxWidth-4,'max-height':floorPlanMaxHeight-4});
   $('#pictureContainer').css('width',topAreaWidth);
-  $vContainer.find('.topArea').css({'left':(topAreaWidth-$floorPlanImage.width())/2 ,'height':topAreaHeight});
+  $vContainer.find('.topArea').css({'left':(topAreaWidth-$topArea.width()-200)/2 ,'height':topAreaHeight});
   $vContainer.find('#pictureContainer').css({'height':topAreaHeight});
   var $floorPlanImage = $vContainer.find('.minimised').css("top",topAreaHeight+padding);
   $('.elastislide-wrapper').width(topAreaWidth-$('#floorPlanLocation').width()-padding*2)
   var $floorPlan = $vContainer.find('#floorPlan');
-  if ($floorPlan.width()<$vContainer.width()){
-    $floorPlan.find('.btn-floating').css('right','-40px');
-  }
 
   if ($vContainer.width()<544){
     $('#carouselLocation').hide();
@@ -210,9 +214,9 @@ function moveFloorPlanToThumbnail(callback) {
         queue: false
     });
 
-
+    $("#floorPlan").css({'min-width':146,'min-height':116,'padding':0});
     $("#floorPlan").animate({
-        width: $floorPlanLocation.width()
+        width: 146
     }, {
         duration: 250,
         queue: false
@@ -222,16 +226,16 @@ function moveFloorPlanToThumbnail(callback) {
     var leftValue =parseInt($floorPlanLocation.css('marginLeft').replace('px',''))+ $floorPlanLocation.innerWidth() - $floorPlanLocation.width();
     console.log("moving floorPlan down left["+leftValue+"]");
     $("#floorPlan").animate({
-        top: $navArea.position().top + $floorPlanLocation.innerWidth() - $floorPlanLocation.width(),
+        top: $navArea.position().top + $floorPlanLocation.innerWidth() - $floorPlanLocation.width()-8,
         left: leftValue,
 
-        height: $floorPlanLocation.height(),
+        height: 116,
     }, {
         duration: 300,
         queue: false,
         complete: function() {
-            $("#floorPlan .floorPlanImage").css({'max-width': $floorPlanLocation.width(), 'max-height':$floorPlanLocation.height()})
-            $("#floorPlan").width($("#floorPlan .floorPlanImage").width());
+            $("#floorPlan .floorPlanImage").css({'max-width': 120, 'max-height':80})
+            $("#floorPlan").width(146);
             //$("#floorPlan").css('left',($floorPlanLocation.innerWidth()-$("#floorPlan .floorPlanImage").width())/2);
             removeIconClicks();
             $("#floorPlan").addClass("minimised");
@@ -244,10 +248,10 @@ function moveFloorPlanToThumbnail(callback) {
 }
 
 function moveFloorPlanToMainArea(callback) {
-    var $container = $('#'+window.id);
+    var $container = $('#vContainer');
     var topAreaWidth= $container.width()-padding *2;
     var topAreaHeight= $container.height()-padding *2-150;
-    $('#floorPlan .floorPlanImage').css({'max-width':topAreaWidth,'max-height':topAreaHeight});
+    $('#floorPlan .floorPlanImage').css({'max-width':floorPlanMaxWidth-4,'max-height':floorPlanMaxHeight-4});
     $('#floorPlanName').show();
     $("#floorPlan").addClass("topArea")
     if (!$("#floorPlan").hasClass("minimised")) {
@@ -275,8 +279,8 @@ function moveFloorPlanToMainArea(callback) {
 
     setTimeout(function() {
         $("#floorPlan").animate({
-            width: $('#floorPlan .floorPlanImage').width(),
-            left: (topAreaWidth-$('#floorPlan .floorPlanImage').width())/2
+            width: floorPlanMaxWidth,
+            left: (topAreaWidth-floorPlanMaxWidth)/2
         }, {
             duration: 200,
             queue: false
@@ -288,7 +292,7 @@ function moveFloorPlanToMainArea(callback) {
     $("#floorPlan").animate({
         top: 0,
         left: 0,
-        height: topAreaHeight,
+        height: floorPlanMaxHeight,
     }, {
         duration: 300,
         queue: false,
@@ -316,7 +320,7 @@ function makeContainer(id, json) {
     var mainColor = json.config.mainColor;
     $('#' + id).append('' +
         '<div id="vContainer" class="z-depth-1">' +
-        '<div id="floorPlan" class="topArea">' +
+        '<div id="floorPlan" class="topArea z-depth-1" style="border: 2px solid '+json.config.secondaryColor + '">' +
           '<dev id="floorPlanName"/>' +
           '<img class="floorPlanImage"/>' +
           '<i id="visibleButton" class="btn-floating btn-large waves-effect waves-light ' + mainColor + ' fa fa-eye" aria-hidden="true"></i>' +

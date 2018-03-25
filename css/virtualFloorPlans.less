@@ -1,7 +1,9 @@
 
 #vContainer {
     position: relative;
-  //  display:none;
+    //400 for the top screen and another 149 for the Carosel. Plus change
+    min-height:559;
+    min-width:600;
 
     i.fa {
         font-size: 20px;
@@ -32,6 +34,15 @@
     #floorPlan{
 
       overflow: visible;
+      border: 2px black solid;
+      width: 600px;
+      height: 400px;
+      min-width: 600px;
+      min-height: 400px;
+
+      padding-left:100px;
+      padding-right:100px;
+      position: absolute;
 
       .floorPlanImage{
         width:auto;
@@ -48,7 +59,7 @@
          font-size:20px;
          text-align: center;
          top:5%;
-         position: relative;
+         position: absolute;
       }
 
     }
