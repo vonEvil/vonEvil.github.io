@@ -1,0 +1,34 @@
+{"config": {
+    "mainColor": "green",
+    "lightenColor": "lighten-2",
+    "darkenColor": "darken-3",
+    "secondaryColor": "orange"
+},"data":
+
+  [
+    {"number":1,
+     "status":"Room",
+     "name":"Attic Room",
+     "uuid":"floor3Uuid",
+     "url":"./assets/avenue_rd/AvenueRd_3.png",
+     "location":[
+        {"uuid":"location31","left":"59%","top":"33%","rotation":310,"type":"Camera360","url":"./assets/avenue_rd/avenueRd_3_back.JPG"},
+        {"uuid":"location32","left":"44%","top":"63%","rotation":310,"type":"Camera360","url":"./assets/avenue_rd/avenueRd_3_front.JPG"},
+        {"uuid":"location33","left":"44%","top":"49%","rotation":310,"type":"Camera360","url":"./assets/avenue_rd/avenueRd_3_centre.JPG"},
+        {"uuid":"location31","left":"59%","top":"33%","rotation":310,"type":"Camera360","url":"./assets/avenue_rd/avenueRd_3_back.JPG"},
+        {"uuid":"location32","left":"44%","top":"63%","rotation":310,"type":"Camera360","url":"./assets/avenue_rd/avenueRd_3_front.JPG"},
+        {"uuid":"location33","left":"44%","top":"49%","rotation":310,"type":"Camera360","url":"./assets/avenue_rd/avenueRd_3_centre.JPG"},
+        {"uuid":"location31","left":"59%","top":"33%","rotation":310,"type":"Camera360","url":"./assets/avenue_rd/avenueRd_3_back.JPG"},
+        {"uuid":"location32","left":"44%","top":"63%","rotation":310,"type":"Camera360","url":"./assets/avenue_rd/avenueRd_3_front.JPG"},
+        {"uuid":"location33","left":"44%","top":"49%","rotation":310,"type":"Camera360","url":"./assets/avenue_rd/avenueRd_3_centre.JPG"},
+        {"uuid":"location31","left":"59%","top":"33%","rotation":310,"type":"Camera360","url":"./assets/avenue_rd/avenueRd_3_back.JPG"},
+        {"uuid":"location32","left":"44%","top":"63%","rotation":310,"type":"Camera360","url":"./assets/avenue_rd/avenueRd_3_front.JPG"},
+        {"uuid":"location33","left":"44%","top":"49%","rotation":310,"type":"Camera360","url":"./assets/avenue_rd/avenueRd_3_centre.JPG"},
+
+        {"uuid":"location34","left":"44%","top":"69%","rotation":310,"type":"Camera360","url":"./assets/avenue_rd/avenueRd_3_frontEdge.JPG"},
+        {"uuid":"location35","left":"48%","top":"75%","rotation":310,"type":"Camera360","url":"./assets/avenue_rd/avenueRd_3_frontPlatform.JPG"}
+
+      ]
+    }
+  ]
+}

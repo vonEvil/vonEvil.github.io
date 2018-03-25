@@ -1,0 +1,4 @@
+DONE - place Top Most sprite z-index based on y
+- reduce calls to CHANGE ACTION <- see console.log
+- Make changes in direction continue with the same animation
+- Do Sprite attack example

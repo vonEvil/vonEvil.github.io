@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="nofollow" />
-    <title>Virtual Floor Plans</title>
+    <title>Avenue Road Project</title>
 
     <link rel="stylesheet" href="./css/animate.css" />
     <link rel="stylesheet" href="./css/pannellum.css" />
@@ -38,8 +38,10 @@
     <script>
     $(document).ready(function() {
       console.log("Loading Json")
-        $.getJSON("./data/house2.json", function(json) {
+
+        $.getJSON("./data/avenue_rd.json", function(json) {
           console.log("Loaded Json")
+
             loadFloorPlan('container',json);
         });
 

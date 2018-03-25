@@ -20,6 +20,7 @@ function showFloorPlan() {
 
 
 function resize(){
+  console.log("called Resize");
   var $container = $('#'+this.id);
   var $vContainer = $('#vContainer');
 
@@ -76,6 +77,7 @@ function changePictureTo(pictureIndex, direction) {
 
     $('#pictureContainer').show();
 
+    changeStatusBanner($(element).attr('status'));
     if (element.hasClass("fa-camera")) {
         if (direction == "UP"){
           changeToCameraPicture($(element).attr('ref') );
@@ -83,10 +85,9 @@ function changePictureTo(pictureIndex, direction) {
         }else{
           movePictureSideways(direction, function(){
             changeToCameraPicture($(element).attr('ref') );
+            ($('#statusBanner').attr('ref') );
           })
         }
-
-
     } else if (element.hasClass("fa-dot-circle-o")) {
       $("#panorama").show();
       $("#pictureViewer").hide();
@@ -102,6 +103,15 @@ function changePictureTo(pictureIndex, direction) {
 
 
     }
+}
+
+function changeStatusBanner(status){
+  if (status == "During"){
+    $("#statusBanner").attr('src',"./assets/common/imagefiles_corner_ribbon02_During.png");
+  }else if (status == "Before"){
+    $("#statusBanner").attr('src',"./assets/common/imagefiles_corner_ribbon02_Before.png");
+  }
+
 }
 
 function changeToCameraPicture(url){
@@ -157,6 +167,7 @@ $("#pictureContainer").animate({
       duration: 175,
       queue: false,
       complete : function(){
+
         callback();
         $("#pictureContainer").css('left',movementAmount)
         $("#pictureContainer").animate({
@@ -173,6 +184,7 @@ $("#pictureContainer").animate({
 
 function moveFloorPlanToThumbnail(callback) {
     $("#floorPlan").removeClass("topArea")
+    $("#floorPlanName").hide();
     if ($("#floorPlan").hasClass("minimised")) {
         if (callback) {
             callback()
@@ -184,7 +196,7 @@ function moveFloorPlanToThumbnail(callback) {
     $("#floorPlan .btn-floating").animate({
         "opacity": 0
     }, {
-        duration: 100,
+        duration: 200,
         queue: false,
         complete: function() {
             console.log("buttons hidden")
@@ -194,7 +206,7 @@ function moveFloorPlanToThumbnail(callback) {
     $("#floorPlan .mapMarker").animate({
         "font-size": 8
     }, {
-        duration: 100,
+        duration: 200,
         queue: false
     });
 
@@ -202,7 +214,7 @@ function moveFloorPlanToThumbnail(callback) {
     $("#floorPlan").animate({
         width: $floorPlanLocation.width()
     }, {
-        duration: 150,
+        duration: 250,
         queue: false
     });
     console.log("moving floorPlan down marginLeft["+$floorPlanLocation.css('marginLeft').replace('px','')+"] innerWidth["+$floorPlanLocation.innerWidth()+"] width["+$floorPlanLocation.width()+"]");
@@ -236,9 +248,11 @@ function moveFloorPlanToMainArea(callback) {
     var topAreaWidth= $container.width()-padding *2;
     var topAreaHeight= $container.height()-padding *2-150;
     $('#floorPlan .floorPlanImage').css({'max-width':topAreaWidth,'max-height':topAreaHeight});
+    $('#floorPlanName').show();
     $("#floorPlan").addClass("topArea")
     if (!$("#floorPlan").hasClass("minimised")) {
         if (callback) {
+            console.log("finished moveFloorPlanToMainArea");
             callback()
             return;
         }
@@ -303,10 +317,12 @@ function makeContainer(id, json) {
     $('#' + id).append('' +
         '<div id="vContainer" class="z-depth-1">' +
         '<div id="floorPlan" class="topArea">' +
+          '<dev id="floorPlanName"/>' +
           '<img class="floorPlanImage"/>' +
           '<i id="visibleButton" class="btn-floating btn-large waves-effect waves-light ' + mainColor + ' fa fa-eye" aria-hidden="true"></i>' +
         '</div>' +
         '<div id="pictureContainer">' +
+          '<img id="statusBanner" src="./assets/common/imagefiles_corner_ribbon02_During.png"></img>' +
           '<div id="panorama"></div>' +
           '<div id="pictureViewer"></div>' +
           '<i id="leftButton" class="btn-floating btn-large waves-effect waves-light ' + mainColor + ' fa fa-arrow-left" aria-hidden="true"></i>' +
@@ -339,6 +355,7 @@ function loadFloorPlan(id, json) {
         floorButton.addClass(json.config.mainColor);
         floorButton.attr("ref", floor.url);
         floorButton.attr("floor", floor.number);
+        floorButton.attr("name", floor.name);
         $('#floorPlan').append(floorButton);
 
         if (i > 0) {
@@ -347,6 +364,7 @@ function loadFloorPlan(id, json) {
         floorButton.css('top', (80 + 50 * i) + "px");
         $(floorButton).on('click', function() {
             $('#floorPlan .floorPlanImage').attr('src',$(this).attr("ref"));
+            $('#floorPlanName').text($(this).attr("name"));
             $('.mapMarker').hide();
             $('.floor' + $(this).attr("floor")).show();
             $('.floorButton').addClass('waves-effect waves-light');
@@ -371,7 +389,8 @@ function loadFloorPlan(id, json) {
             } else {
                 template.addClass("fa-dot-circle-o");
             }
-            template.attr('ref', location.url);
+            template.attr('ref', location.urlLarge);
+            template.attr('status', location.status);
             $('#floorPlan').append(template);
             cameraPoints.push(location);
             $carousel.append('<li pictureindex="' + pictureIndex + '"><a href="#"><img width="150" height="120" src="' + location.url + '"/></a></li>')
@@ -379,13 +398,16 @@ function loadFloorPlan(id, json) {
         }
     }
     this.elastislide= $('#carousel').elastislide({
-        'onReady': function() {
+        onReady: function() {
             $('.elastislide-wrapper nav span').addClass(json.config.mainColor);
             highlightIcon(0);
+            console.log("elastislide ready");
+            $('#container').css('display','block');
             resize();
 
         },
-        "onClick": function(element, position, evt) {
+        onClick: function(element, position, evt) {
+            console.log('elastislide clicked '+position);
             moveFloorPlanToThumbnail(function() {
                 return changePictureTo(element.attr('pictureindex'),"UP")
             });

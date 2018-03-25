@@ -1,0 +1,42 @@
+{"config": {
+    "mainColor": "green",
+    "lightenColor": "lighten-2",
+    "darkenColor": "darken-3",
+    "secondaryColor": "orange"
+},
+"data":
+
+  [
+    {"number":1,
+     "status":"During",
+     "name":"Attic Room - Week 3",
+     "uuid":"floor1Uuid",
+     "url":"./assets/avenue_rd/AvenueRd_3.png",
+     "location":[
+        {"uuid":"location11","left":"59%","top":"33%","rotation":310,"type":"Camera360","status":"During","url":"./assets/avenue_rd/week3/avenueRd_3_back_small.png","urlLarge":"./assets/avenue_rd/week3/avenueRd_3_back.JPG"},
+        {"uuid":"location12","left":"44%","top":"63%","rotation":310,"type":"Camera360","status":"During","url":"./assets/avenue_rd/week3/avenueRd_3_front_small.png","urlLarge":"./assets/avenue_rd/week3/avenueRd_3_front.JPG"},
+        {"uuid":"location13","left":"44%","top":"49%","rotation":310,"type":"Camera360","status":"During","url":"./assets/avenue_rd/week3/avenueRd_3_centre_small.png","urlLarge":"./assets/avenue_rd/week3/avenueRd_3_centre.JPG"},
+        {"uuid":"location14","left":"44%","top":"69%","rotation":310,"type":"Camera360","status":"During","url":"./assets/avenue_rd/week3/avenueRd_3_frontEdge_small.png","urlLarge":"./assets/avenue_rd/week3/avenueRd_3_frontEdge.JPG"},
+        {"uuid":"location15","left":"48%","top":"75%","rotation":310,"type":"Camera360","status":"During","url":"./assets/avenue_rd/week3/avenueRd_3_frontPlatform_small.png","urlLarge":"./assets/avenue_rd/week3/avenueRd_3_frontPlatform.JPG"},
+        {"uuid":"location16","left":"19%","top":"68%","rotation":35,"type":"camera","status":"During","url":"./assets/avenue_rd/week3/avenueRd_3_layingFloor6_small.JPG","urlLarge":"./assets/avenue_rd/week3/avenueRd_3_layingFloor6.JPG"}
+
+      ]
+    },
+    {"number":2,
+     "status":"During",
+     "name":"Attic Room - Week 4",
+     "uuid":"floor2Uuid",
+     "url":"./assets/avenue_rd/AvenueRd_3.png",
+     "location":[
+        {"uuid":"location22","left":"43%","top":"54%","rotation":310,"type":"Camera360","status":"During","url":"./assets/avenue_rd/week4/week4_mid_high.png","urlLarge":"./assets/avenue_rd/week4/avenueRd_3_corner_high_2.JPG"},
+        {"uuid":"location23","left":"27%","top":"65%","rotation":310,"type":"Camera360","status":"During","url":"./assets/avenue_rd/week4/week4_corner.png","urlLarge":"./assets/avenue_rd/week4/avenueRd_3_corner_high_3.JPG"},
+        {"uuid":"location24","left":"44%","top":"74%","rotation":310,"type":"Camera360","status":"During","url":"./assets/avenue_rd/week4/week4_front.png","urlLarge":"./assets/avenue_rd/week4/avenueRd_3_front.JPG"},
+        {"uuid":"location25","left":"44%","top":"65%","rotation":310,"type":"Camera360","status":"During","url":"./assets/avenue_rd/week4/week4_mid.png","urlLarge":"./assets/avenue_rd/week4/avenueRd_3_mid_human_scale.JPG"},
+        {"uuid":"location26","left":"43%","top":"56%","rotation":310,"type":"Camera360","status":"During","url":"./assets/avenue_rd/week4/week4_human_window.png","urlLarge":"./assets/avenue_rd/week4/avenueRd_3_mid_human_window.JPG"},
+        {"uuid":"location27","left":"24%","top":"67%","rotation":38,"type":"camera","status":"During","url":"./assets/avenue_rd/week4/avenueRd_3_camera_1_small.JPG","urlLarge":"./assets/avenue_rd/week4/avenueRd_3_camera_1.JPG"},
+        {"uuid":"location28","left":"28%","top":"69%","rotation":10,"type":"camera","status":"During","url":"./assets/avenue_rd/week4/avenueRd_3_camera_2_small.JPG","urlLarge":"./assets/avenue_rd/week4/avenueRd_3_camera_2.JPG"}
+
+      ]
+    }
+  ]
+}

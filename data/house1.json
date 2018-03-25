@@ -15,35 +15,40 @@
                 "left": "62%",
                 "top": "74%",
                 "rotation": 340,
-                "type": "Camera360",
+                "type": "camera",
+                "_type": "Camera360",
                 "url": "./assets/woodlands/hall.jpg"
             }, {
                 "uuid":"location2",
                 "left": "47%",
                 "top": "35%",
                 "rotation": 340,
-                "type": "Camera360",
+                "type": "camera",
+                "_type": "Camera360",
                 "url": "./assets/woodlands/kitchen1.jpg"
             }, {
                 "uuid":"location3",
                 "left": "47%",
                 "top": "72%",
                 "rotation": 340,
-                "type": "Camera360",
+                  "type": "camera",
+                  "_type": "Camera360",
                 "url": "./assets/woodlands/conservatory.jpg"
             }, {
                 "uuid":"location4",
                 "left": "18%",
                 "top": "18%",
                 "rotation": 340,
-                "type": "Camera360",
+                  "type": "camera",
+                  "_type": "Camera360",
                 "url": "./assets/woodlands/study.jpg"
             }, {
                 "uuid":"location5",
                 "left": "78%",
                 "top": "59%",
                 "rotation": 340,
-                "type": "Camera360",
+                  "type": "camera",
+                  "_type": "Camera360",
                 "url": "./assets/woodlands/sittingroom.jpg"
             }, {
                 "uuid":"location6",
